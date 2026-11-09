@@ -53,3 +53,5 @@ Homestead.json
 .phpactor.json
 auth.json
 
+
+.env.example

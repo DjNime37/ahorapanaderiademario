@@ -2,20 +2,17 @@
 
 namespace App\Repositories;
 
-class ProductoRepository
+class ProductoRepository implements ProductoRepositoryInterface
 {
     public function all()
     {
-        $modelClass = '\App\Models\Producto';
+        $modelClass = '\App\Models\Productos';
         return $modelClass::with('categoria')->get();
     }
 
-    /**
-     * @param int|string $id
-     */
-    public function find($id)
+    public function find(int $id)
     {
-        $modelClass = '\App\Models\Producto';
+        $modelClass = '\App\Models\Productos';
         return $modelClass::with('categoria')->find($id);
     }
 }

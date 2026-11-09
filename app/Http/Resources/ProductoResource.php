@@ -22,12 +22,12 @@ class ProductoResource extends JsonResource
             'id' => $this->id,
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion ?? null,
-            'precio' => $this->precio,
+            'precio' => (float) $this->precio,
             'precio_formateado' => number_format($this->precio, 2) . ' €',
-            'imagen' => isset($this->imagen) ? \asset('storage/' . $this->imagen) : null,
+            'imagen' => empty($this->imagen) ? null : (preg_match('/^https?:\/\//i', $this->imagen) ? $this->imagen : asset('storage/' . $this->imagen)),
             'disponible' => (bool) $this->disponible,
             'categoria_id' => $this->categoria_id ?? null,
-            'categoria' => $this->whenLoaded('categoria'),
+            'categoria' => new CategoriaResource($this->whenLoaded('categoria')),
         ];
     }
 }
