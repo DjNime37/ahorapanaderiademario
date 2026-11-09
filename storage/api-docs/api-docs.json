@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/ahorapanaderiademario",
+            "url": "http://127.0.0.1:8000",
             "description": "Servidor Local"
         }
     ],
@@ -22,9 +22,147 @@
                 "operationId": "786d74243fbf30dace82b25a638113b4",
                 "responses": {
                     "200": {
-                        "description": "Operación exitosa"
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Producto"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        },
+        "/api/productos/{id}": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Consultar producto",
+                "description": "Devuelve un producto según su identificador",
+                "operationId": "d82fcf54a61b41d79fee46cb397bddab",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Producto"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Producto no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Producto no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Categoria": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Producto": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "precio": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "precio_formateado": {
+                        "type": "string"
+                    },
+                    "imagen": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "disponible": {
+                        "type": "boolean"
+                    },
+                    "categoria_id": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "categoria": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Categoria"
+                            },
+                            {
+                                "type": "object",
+                                "nullable": true,
+                                "enum": [
+                                    null
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "type": "object"
             }
         }
     },
