@@ -52,3 +52,9 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+
+
+.env.example
+/config/l5-swagger.php.bak
+/config/l5-swagger.php.bak2
+/public/docs_backup/
